@@ -43,7 +43,7 @@ int main() {
             dane.push_back(pomocnicza);
         }else break;
     }
-    for(int i=0; i<=ileMacierzy; i++)
+    for(int i=0; i<ileMacierzy; i++)
         dane[i].Wykonaj();
     return 0;
 }
