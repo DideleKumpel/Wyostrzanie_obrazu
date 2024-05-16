@@ -32,11 +32,12 @@ int main() {
             pomocnicza.h=b;
             pomocnicza.roz=c;
             vector<vector<double>> tymczasowy(a+1, (vector<double> (b+1)));
-            for(int i=1; i<=a; i++) {
-                for (int j = 1; j <=b; j++) {
+            for (int j = 1; j <=b; j++) {
+                for (int i = 1; i <= a; i++) {
                     double d;
                     cin >> d;
-                    tymczasowy[i][j]=d;
+                    tymczasowy[i][j] = d;
+
                 }
             }
             pomocnicza.zablurowana=tymczasowy;
@@ -51,18 +52,18 @@ int main() {
 void obraz::utworzenieRownan(){
     vector<vector<double>> RownanPomocnicze(w*h+1, (vector<double> (w*h+1)));
     int IleDodanych;
-    for(int i=1;i<=h;i++)
+    for(int i=1;i<=w;i++)
     {
-        for(int j=1;j<=w;j++)
+        for(int j=1;j<=h;j++)
         {
             IleDodanych=0;
-            for(int k=1;k<=h;k++)
+            for(int k=1;k<=w;k++)
             {
-                for(int l=1;l<=w;l++)
+                for(int l=1;l<=h;l++)
                 {
                     if(abs(k-i)+abs(l-j)<=roz)
                     {
-                        RownanPomocnicze[przelicznik(i, j)][przelicznik(k, l)]=1;  //zapisujey rownania w formie [nr rownania w macierzy zablurowanej][niewiadome wchodzace skladtego urwnania(=1)]
+                        RownanPomocnicze[przelicznik(j, i)][przelicznik(k, l)]=1;  //zapisujey rownania w formie [nr rownania w macierzy zablurowanej][niewiadome wchodzace skladtego urwnania(=1)]
                         IleDodanych++;
                     }
                 }
@@ -74,7 +75,7 @@ void obraz::utworzenieRownan(){
 }
 
 int obraz::przelicznik(int x, int y) {
-    return (x - 1) * w + y; //przeliczanie pozycji 2 wymiarowej tablicy na jeden wymiar
+    return (y - 1) * w + x; //przeliczanie pozycji 2 wymiarowej tablicy na jeden wymiar
 }
 
 void obraz::EleminacjaGausa(){
@@ -113,7 +114,7 @@ void obraz::EleminacjaGausa(){
 void obraz::wyswietl() {
     for(int i = 1; i <= h; ++i){
         for(int j = 1; j <= w; ++j){
-            cout << setw(8) << setprecision(2) << fixed << wyostrzony[j][i] << " ";
+            cout << setw(8) << setprecision(2) << fixed << wyostrzony[i][j] << " ";
         }
         cout << '\n';
     }
