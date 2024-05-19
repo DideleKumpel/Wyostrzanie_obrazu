@@ -63,7 +63,7 @@ void obraz::utworzenieRownan(){
                 {
                     if(abs(k-i)+abs(l-j)<=roz)
                     {
-                        RownanPomocnicze[przelicznik(j, i)][przelicznik(k, l)]=1;  //zapisujey rownania w formie [nr rownania w macierzy zablurowanej][niewiadome wchodzace skladtego urwnania(=1)]
+                        RownanPomocnicze[przelicznik(i, j)][przelicznik(k, l)]=1;  //zapisujey rownania w formie [nr rownania w macierzy zablurowanej][niewiadome wchodzace skladtego urwnania(=1)]
                         IleDodanych++;
                     }
                 }
@@ -83,8 +83,10 @@ void obraz::EleminacjaGausa(){
         int wiersz=-1;
         if(rownania[i][i]==0) { //pozniej bedziemy dielic przez ta liczbe nalzey sprawdzic czy bedzie tam zero jesli zero nalezy
             for (int j = i; j <= w * h; j++) {
-                if (rownania[j][i] != 0)  //sprawdza gdzie w kolumnie powyzej przekatnej nie ma zera
+                if (rownania[j][i] != 0) {  //sprawdza gdzie w kolumnie powyzej przekatnej nie ma zera
                     wiersz = j;
+                    break;
+                }
             }
             if (wiersz == -1) // Jesli nie znaleziono zero
                 continue;
@@ -104,8 +106,7 @@ void obraz::EleminacjaGausa(){
             rownania[i][w*h+1] -= rownania[j][w*h+1] * rownania[i][j];
         int x = i % w;        //wyliczanie pozycji wyniku w macierzy z wyostzronym obrazem
         if (x == 0) x = w;
-        int y = (i - x) / w;
-        y++;
+        int y = ((i - x) / w)+1;
         wyostrzonyPomocniczy[x][y] = rownania[i][w * h + 1] /= rownania[i][i]; //zapisanie wyniku do wyostrzinej macierzy
     }
     wyostrzony=wyostrzonyPomocniczy;
@@ -114,7 +115,7 @@ void obraz::EleminacjaGausa(){
 void obraz::wyswietl() {
     for(int i = 1; i <= h; ++i){
         for(int j = 1; j <= w; ++j){
-            cout << setw(8) << setprecision(2) << fixed << wyostrzony[i][j] << " ";
+            cout << setw(8) << setprecision(2) << fixed << wyostrzony[j][i] << " ";
         }
         cout << '\n';
     }
